@@ -1,0 +1,26 @@
+version: "2.4"
+# Build path indicates where your Dockerfile for each service will be located
+# and the appropriate context
+services:
+  # Expected services
+  web:
+    build: ./web
+    image: web:v0.0.0
+    ports:
+      - "80:80"
+    networks:
+      - main
+  djapi:
+    build: ./djapi
+    image: djapi:v0.0.0
+    ports:
+      - "5000:5000"
+    networks:
+      - main
+  # You may add any supplemental services here
+  # ...
+# This allows services to reach each other from within Docker containers and
+# for an internal name resolution based on the 'names' of the services defined
+# above
+networks:
+  main:
