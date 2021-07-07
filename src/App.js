@@ -1,40 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import { JsonToTable } from "react-json-to-table";
-
-
+import MouseAdd from './MouseAdd';
 function App() {
   const [mouseTable, setMouseTable] = useState(0);
-
-  useEffect(() => {
-    fetch('/getmouse').then(res => res.json()).then(data => {
-      setMouseTable(data);
-    });
-  }, []);
-
   const [sessionTable, setSessionTable] = useState(0);
+  
 
-  useEffect(() => {
-    fetch('/getsessions').then(res => res.json()).then(data => {
-      setSessionTable(data);
+  function getMouseTable() {
+  fetch('/getmouse').then(res => res.json()).then(data => {
+    setMouseTable(data);
+  });
+  }; 
+  
+  function getSessionTable() {
+    fetch('/getsessions').then(res => res.json()).then(data1 => {
+      setSessionTable(data1);
     });
-  }, []);
+  };
+
 
   return (
     <div className="App">
       <header className="App-header">
-
-        Mouse Table
+        <h1>Mouse Table</h1>
         <JsonToTable json={mouseTable} />
-
-        Session Table
+        <button onClick={getMouseTable}>Refresh/Load Table 🗘</button>
+        <h1>Session Table</h1>
         <JsonToTable json={sessionTable} />
-        Mouse Table Data Entry
-        <div>
-          <button>
-            test
-          </button>
-        </div>
+        <button onClick={getSessionTable}>Refresh/Load Table 🗘</button>
+        <h3>Mouse Table Data Entry</h3>
+        <MouseAdd/>
       </header>
     </div>
   );

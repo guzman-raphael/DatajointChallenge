@@ -88,7 +88,9 @@ def get_sessions():
 #
 @app.route("/setmouse", methods = ['POST'])
 def set_mouse():
-    data = json.load(request.get_json())
+    data = request.form
     print(data)
+    Mouse.insert1(data)
+    return "added"
 if __name__ =='__main__':  
     app.run(debug = False)  
