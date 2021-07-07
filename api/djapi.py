@@ -1,11 +1,10 @@
+import json
 import time
-from flask import Flask
+from flask import Flask, jsonify, request
 import datajoint as dj
 import math
 import numpy as np
 import datetime
-import json
-
 
 app = Flask(__name__)
 
@@ -55,10 +54,10 @@ class Session(dj.Manual):
 with open('data.json') as db_json:
     #data will have a list of dictionarys that is the contents of the json
     data = json.load(db_json)
-    for dic in data:
+    for dict in data:
         #split the dictionary into two parts, one for the session and one for the mouse
-        mouse_data = {'mouse_name' : dic['subject_name'],'dob': dic['subject_dob'],'sex' : dic['subject_sex']}
-        session_data = {'mouse_name' : dic['subject_name'], 'session_date' : dic['session_date'], 'experiment_setup' : dic['experiment_setup']}
+        mouse_data = {'mouse_name' : dict['subject_name'],'dob': dict['subject_dob'],'sex' : dict['subject_sex']}
+        session_data = {'mouse_name' : dict['subject_name'], 'session_date' : dict['session_date'], 'experiment_setup' : dict['experiment_setup']}
 
         #note that insert1 is for single row while insert does multiple
         #insert the mouse data into the db while skipping any duplicates
@@ -76,6 +75,20 @@ print(Session())
 def get_current_time():
     return {'time': time.time()}
 
-#debug = True because this is a developement environment
+#should return the entire mouse table as json
+@app.route("/getmouse")
+def get_mouse():
+    return jsonify(Mouse.fetch(as_dict = True))
+
+#should return the session table as json
+@app.route("/getsessions")
+def get_sessions():
+    return jsonify(Session.fetch(as_dict = True))
+
+#
+@app.route("/setmouse", methods = ['POST'])
+def set_mouse():
+    data = json.load(request.get_json())
+    print(data)
 if __name__ =='__main__':  
-    app.run(debug = True)  
+    app.run(debug = False)  
