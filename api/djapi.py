@@ -15,6 +15,8 @@ app = Flask(__name__)
 
 #Config for db connection, default to the tutorial db
 dj.config['database.host'] = 'tutorial-db.datajoint.io'
+dj.config['database.user'] = 'jverswijver'
+dj.config['database.password'] = 'pass19731973'
 
 schema = dj.Schema('jverswijver_Software_Challenge')
 
@@ -86,11 +88,18 @@ def get_sessions():
     return jsonify(Session.fetch(as_dict = True))
 
 #
-@app.route("/setmouse", methods = ['POST'])
+@app.route("/setmouse", methods = ['POST', ])
 def set_mouse():
     data = request.form
     print(data)
     Mouse.insert1(data)
     return "added"
+
+@app.route("/setsession", methods = ['POST', ])
+def set_session():
+    data = request.form
+    print(data)
+    Session.insert1(data)
+    return "added"
 if __name__ =='__main__':  
-    app.run(debug = False)  
+    app.run()

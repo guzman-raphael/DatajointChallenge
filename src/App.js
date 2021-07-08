@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { JsonToTable } from "react-json-to-table";
 import MouseAdd from './MouseAdd';
+import SessionAdd from './SessionAdd';
 function App() {
   const [mouseTable, setMouseTable] = useState(0);
   const [sessionTable, setSessionTable] = useState(0);
@@ -30,6 +31,8 @@ function App() {
         <button onClick={getSessionTable}>Refresh/Load Table 🗘</button>
         <h3>Mouse Table Data Entry</h3>
         <MouseAdd/>
+        <h3>Session Table Data Entry</h3>
+        <SessionAdd/>
       </header>
     </div>
   );

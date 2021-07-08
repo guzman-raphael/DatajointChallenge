@@ -4,14 +4,14 @@ version: "2.4"
 services:
   # Expected services
   web:
-    build: ./web
+    build: /
     image: web:v0.0.0
     ports:
-      - "80:80"
+      - "3000:3000"
     networks:
       - main
   djapi:
-    build: ./djapi
+    build: ./api
     image: djapi:v0.0.0
     ports:
       - "5000:5000"
