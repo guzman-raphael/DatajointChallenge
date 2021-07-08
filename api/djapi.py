@@ -15,8 +15,6 @@ app = Flask(__name__)
 
 #Config for db connection, default to the tutorial db
 dj.config['database.host'] = 'tutorial-db.datajoint.io'
-dj.config['database.user'] = 'jverswijver'
-dj.config['database.password'] = 'pass19731973'
 
 schema = dj.Schema('jverswijver_Software_Challenge')
 
